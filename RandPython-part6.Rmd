@@ -5,19 +5,27 @@ date: "November 20, 2017"
 output: html_document
 ---
 
-This is the 5th and probably penultimate part of my series on 'Practical Machine Learning
-with R and Python'. The earlier parts of this series included
+
+This is the last and concluding part of my series on 'Practical Machine Learning with
+R and Python'. In this series I  included the implementations of the most common
+Machine Learning algorithms in R and equivalent Python code. In touched upon
+the following ML algorithms in
+ 
 
 1. [Practical Machine Learning with R and Python - Part 1](https://gigadom.wordpress.com/2017/10/06/practical-machine-learning-with-r-and-python-part-1/)
-In this initial post, I touch upon univariate, multivariate, polynomial regression and KNN regression in R and Python
+In this initial post, I touch upon regression of a continuous target variable. Specifically I touch upon Univariate, Multivariate, Polynomial regression and KNN regression in both R and Python
 2. [Practical Machine Learning with R and Python - Part 2](https://gigadom.wordpress.com/2017/10/13/practical-machine-learning-with-r-and-python-part-2/)
-In this post, I discuss Logistic Regression, KNN classification and cross validation error for both LOOCV and K-Fold in both R and Python 
+In this post, I discuss Logistic Regression, KNN classification and Cross Validation error for both LOOCV and K-Fold in both R and Python 
 3. [Practical Machine Learning with R and Python - Part 3](https://gigadom.wordpress.com/2017/10/20/practical-machine-learning-with-r-and-python-part-3/)
-This post  covered 'feature selection' in Machine Learning. Specifically I touch best fit, forward fit, backward fit, ridge(L2 regularization) & lasso (L1 regularization). The post includes equivalent code in R and Python. 
+This 3rd part included 'feature selection' in Machine Learning. Specifically I touch best fit, forward fit, backward fit, ridge(L2 regularization) & lasso (L1 regularization). The post includes equivalent code in R and Python. 
 4. [Practical Machine Learning with R and Python - Part 4](https://gigadom.wordpress.com/2017/10/29/practical-machine-learning-with-r-and-python-part-4/)
-In this part I discussed SVMs, Decision Trees, validation, precision recall, and roc curves
+In this part I discussed SVMs, Decision Trees, Validation, Precision-Recall, AUC and  ROC curves
+5. [Practical Machine Learning with R and Python - Part 5](https://gigadom.wordpress.com/2017/11/07/practical-machine-learning-with-r-and-python-part-5/)
+In this penultimate part I touch upon B-splines, natural splines, smoothinf spline,
+Generalized Additive Models, Decision Trees, Random Forests and Gradient Boosted Trees.
 
-
+In this last part I cover Unsupervised Learning. Specifically I cover the implementations
+of Principal Component Analysis (PCA). K-Means and Heirachical Clustering
 
 ```{r}
 library(dplyr)
@@ -209,3 +217,9 @@ plt.savefig('fig4.png', bbox_inches='tight')
 ```
 
 ![output](fig4.png)
+
+
+**References**
+
+1. [Statistical Learning](https://lagunita.stanford.edu/courses/HumanitiesandScience/StatLearning/Winter2015/about), Prof Trevor Hastie & Prof Robert Tibesherani, Online Stanford
+2. [Applied Machine Learning in Python](https://www.coursera.org/learn/python-machine-learning) Prof Kevyn-Collin Thomson, University Of Michigan, Coursera
