@@ -164,5 +164,48 @@ plt.scatter(centers[:, 0], centers[:, 1], c='darkblue', s=100)
 plt.savefig('fig3.png', bbox_inches='tight')
 ```
 
+
 ![output](fig3.png)
 
+```{r}
+iris <- datasets::iris
+iris2 <- iris[,-5]
+species <- iris[,5]
+d_iris <- dist(iris2) # method="man" # is a bit better
+
+d_iris <- dist(iris)
+hc_iris <- hclust(d_iris, method = "average")
+plot(hc_iris)
+# Cut tree into 4 groups
+sub_grp <- cutree(hc_iris, k = 3)
+
+# Number of members in each cluster
+table(sub_grp)
+
+rect.hclust(hc_iris, k = 3, border = 2:5)
+
+```
+
+
+
+
+```{python}
+from sklearn.datasets import load_iris
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
+iris = load_iris()
+
+
+# generate the linkage matrix
+Z = linkage(iris.data, 'average')
+dendrogram(Z)
+plt.xlabel('Data')
+plt.ylabel('Distance')
+plt.suptitle('Samples clustering', fontweight='bold', fontsize=14);
+
+
+
+plt.savefig('fig4.png', bbox_inches='tight')
+```
+
+![output](fig4.png)
