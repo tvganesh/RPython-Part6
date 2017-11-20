@@ -1,0 +1,168 @@
+---
+title: "RandPython-Part6"
+author: "Tinniam V Ganesh"
+date: "November 20, 2017"
+output: html_document
+---
+
+This is the 5th and probably penultimate part of my series on 'Practical Machine Learning
+with R and Python'. The earlier parts of this series included
+
+1. [Practical Machine Learning with R and Python - Part 1](https://gigadom.wordpress.com/2017/10/06/practical-machine-learning-with-r-and-python-part-1/)
+In this initial post, I touch upon univariate, multivariate, polynomial regression and KNN regression in R and Python
+2. [Practical Machine Learning with R and Python - Part 2](https://gigadom.wordpress.com/2017/10/13/practical-machine-learning-with-r-and-python-part-2/)
+In this post, I discuss Logistic Regression, KNN classification and cross validation error for both LOOCV and K-Fold in both R and Python 
+3. [Practical Machine Learning with R and Python - Part 3](https://gigadom.wordpress.com/2017/10/20/practical-machine-learning-with-r-and-python-part-3/)
+This post  covered 'feature selection' in Machine Learning. Specifically I touch best fit, forward fit, backward fit, ridge(L2 regularization) & lasso (L1 regularization). The post includes equivalent code in R and Python. 
+4. [Practical Machine Learning with R and Python - Part 4](https://gigadom.wordpress.com/2017/10/29/practical-machine-learning-with-r-and-python-part-4/)
+In this part I discussed SVMs, Decision Trees, validation, precision recall, and roc curves
+
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+#Note: This example is based on the example in the book Python Datascience handbook by 
+# Jake VanderPlas
+digits= read.csv("digits.csv")
+# Digits target
+digitClasses <- factor(digits$X0.000000000000000000e.00.29)
+digitsPCA=prcomp(digits[,1:64])
+
+df <- data.frame(digitsPCA$x)
+df1 <- cbind(df,digitClasses)
+#Plot only the first 2 Principal components as a scatter plot
+ggplot(df1,aes(x=PC1,y=PC2,col=digitClasses)) + geom_point() +
+  ggtitle("Top 2 Principal Components")
+
+
+```
+
+```{r}
+digits= read.csv("digits.csv")
+# Digits target
+digitClasses <- factor(digits$X0.000000000000000000e.00.29)
+digitsPCA=prcomp(digits[,1:64])
+# Plot the percent variance exlained with the number of principal components
+# Get the Standard Deviation
+digitsPCA$sdev
+# Compute the variance
+digitsVar=digitsPCA$sdev^2
+#Compute the percent variance explained
+percentVarExp=digitsVar/sum(digitsVar)
+
+
+plot(cumsum(percentVarExp), xlab="Principal Component", 
+     ylab="Cumulative Proportion of Variance Explained", 
+     main="Principal Components vs % Variance explained",ylim=c(0,1),type='l',lwd=2,
+       col="blue")
+```
+
+
+
+```{python}
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn import decomposition
+from sklearn import datasets
+import matplotlib.pyplot as plt
+  
+from sklearn.datasets import load_digits
+digits = load_digits()
+digits.data.shape
+pca = PCA(2)  # project from 64 to 2 dimensions
+projected = pca.fit_transform(digits.data)
+
+
+plt.scatter(projected[:, 0], projected[:, 1],
+            c=digits.target, edgecolor='none', alpha=0.5,
+            cmap=plt.cm.get_cmap('spectral', 10))
+plt.xlabel('component 1')
+plt.ylabel('component 2')
+plt.colorbar();
+plt.title("op 2 Principal Components")
+plt.savefig('fig1.png', bbox_inches='tight')
+```
+![output](fig1.png)
+
+```{python}
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn import decomposition
+from sklearn import datasets
+import matplotlib.pyplot as plt
+  
+from sklearn.datasets import load_digits
+digits = load_digits()
+pca = PCA(64)  # project from 64 to 2 dimensions
+projected = pca.fit_transform(digits.data)
+varianceExp= pca.explained_variance_ratio_
+totVarExp=np.cumsum(np.round(pca.explained_variance_ratio_, decimals=4)*100)
+totVarExp
+plt.plot(totVarExp)
+plt.xlabel('No of principal components')
+plt.ylabel('% variance explained')
+plt.title('No of Principal Components vs Total Variance explained')
+plt.savefig('fig2.png', bbox_inches='tight')
+```
+
+
+![output](fig2.png)
+
+```{r}
+digits= read.csv("digits.csv")
+# Digits target
+digitClasses <- factor(digits$X0.000000000000000000e.00.29)
+digitsPCA=prcomp(digits[,1:64])
+
+df <- data.frame(digitsPCA$x)
+df1 <- cbind(df,digitClasses)
+
+# Pick only the first 2 principal components
+a<- df[,1:2]
+# Compute K Means of 10 clusters
+k<-kmeans(a,10,1000)
+
+# Create a dataframe of the centroids of the clusters
+df2<-data.frame(k$centers)
+
+#Plot the first 2 principal components with the K Means
+ggplot(df1,aes(x=PC1,y=PC2,col=digitClasses)) + geom_point() +
+    geom_point(data=df2,aes(x=PC1,y=PC2),col="black",size = 4) + 
+    ggtitle("Top 2 Principal Components with KMeans clustering") 
+```
+
+```{python}
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn import decomposition
+from sklearn import datasets
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_digits
+from sklearn.cluster import KMeans
+digits = load_digits()
+
+pca = PCA(2)  # project from 64 to 2 dimensions
+projected = pca.fit_transform(digits.data)
+
+kmeans = KMeans(n_clusters=10)
+
+kmeans.fit(projected)
+y_kmeans = kmeans.predict(projected)
+y_kmeans
+centers = kmeans.cluster_centers_
+centers
+
+plt.scatter(projected[:, 0], projected[:, 1],
+            c=digits.target, edgecolor='none', alpha=0.5,
+            cmap=plt.cm.get_cmap('spectral', 10))
+plt.xlabel('component 1')
+plt.ylabel('component 2')
+plt.colorbar();
+
+plt.scatter(centers[:, 0], centers[:, 1], c='darkblue', s=100)
+plt.savefig('fig3.png', bbox_inches='tight')
+```
+
+![output](fig3.png)
+
