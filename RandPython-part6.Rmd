@@ -27,7 +27,12 @@ In this last part I cover Unsupervised Learning. Specifically I cover the implem
 of Principal Component Analysis (PCA). K-Means and Heirachical Clustering
 
 ## 1.1a Principal Component Analysis (PCA) - R code 
-```{r}
+ Principal Component Analysis is used to reduce the dimensionality of the input. In the code
+ below 8 x 8 pixel of handwritten digits is reduced into its principal components.
+ Then a scatter plot of the first 2 principal components give a very good visial
+ representation of the data
+ 
+```{r fig1,cache=TRUE}
 library(dplyr)
 library(ggplot2)
 #Note: This example is adapted from an the example in the book Python Datascience handbook by 
@@ -54,7 +59,7 @@ ggplot(df1,aes(x=PC1,y=PC2,col=digitClasses)) + geom_point() +
 ```
 
 ## 1.1 b Plot the variance explained as function of principal components - R code
-```{r}
+```{r fig2,cache=TRUE}
 # Read the digits data (from sklearn datasets)
 digits= read.csv("digits.csv")
 # Digits target
@@ -137,7 +142,7 @@ plt.savefig('fig2.png', bbox_inches='tight')
 In the code first the scatter plot of the first 2 Principal Components of the handwritten digits is plotted as a scatter plot. Over this plot 10 centroids of the 10 different clusters
 corresponding the 10 diferent digits is plotted over the original scatter plot.
 
-```{r}
+```{r fig3,cache=TRUE}
 library(ggplot2)
 # Read the digits data
 digits= read.csv("digits.csv")
@@ -213,13 +218,14 @@ Herirachical clusters is another type of unsupervised learning. It successively 
 closest pair of objects (points or clusters) in succession based on some 'distance' metric.
 In this type of clustering we do not have choose the number of centroids. We can cut the created dendrogram  mat an appropriate height to get a desired and reasonable number of clusters
 These are the following 'distance' metrics used while combining successive objects
+
 - Ward
 - Complete
 - Single
 - Average
 - Centroid
 
-```{r}
+```{r fig4,cache=TRUE}
 # Read the IRIS dataset
 iris <- datasets::iris
 iris2 <- iris[,-5]
@@ -251,22 +257,31 @@ rect.hclust(hc_iris, k = 3, border = 2:5)
 from sklearn.datasets import load_iris
 import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import dendrogram, linkage
+# Load the IRIS data set
 iris = load_iris()
 
 
-# generate the linkage matrix
+# Generate the linkage matrix using the average method
 Z = linkage(iris.data, 'average')
+
+#Plot the dendrogram
 dendrogram(Z)
 plt.xlabel('Data')
 plt.ylabel('Distance')
 plt.suptitle('Samples clustering', fontweight='bold', fontsize=14);
-
-
-
 plt.savefig('fig4.png', bbox_inches='tight')
 ```
 
 ![output](fig4.png)
+
+# Conclusion
+This is the last and concluding part of my series on Practical Machine Learning with R and Python. These parallel implementations of R and Python can be used as a quick  reference while
+working on a large project. A person who is adept in one of the languages R or Python,
+can quickly absorb code in the other language.
+
+Hope you find this series useful!
+
+More interesting things to come. Watch this space!
 
 
 **References**
