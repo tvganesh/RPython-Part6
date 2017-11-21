@@ -108,7 +108,7 @@ plt.colorbar();
 plt.title("Top 2 Principal Components")
 plt.savefig('fig1.png', bbox_inches='tight')
 ```
-![output](fig1.png)
+
 ## 1.1 b Plot the variance explained as function of principal components - Python code
 ```{python}
 import numpy as np
@@ -137,7 +137,7 @@ plt.savefig('fig2.png', bbox_inches='tight')
 ```
 
 
-![output](fig2.png)
+
 ## 1.2a K-Means - R code
 In the code first the scatter plot of the first 2 Principal Components of the handwritten digits is plotted as a scatter plot. Over this plot 10 centroids of the 10 different clusters
 corresponding the 10 diferent digits is plotted over the original scatter plot.
@@ -202,8 +202,8 @@ centers
 plt.scatter(projected[:, 0], projected[:, 1],
             c=digits.target, edgecolor='none', alpha=0.5,
             cmap=plt.cm.get_cmap('spectral', 10))
-plt.xlabel('component 1')
-plt.ylabel('component 2')
+plt.xlabel('PCA 1')
+plt.ylabel('PCA 2')
 plt.colorbar();
 # Overlay the centroids on the scatter plot
 plt.scatter(centers[:, 0], centers[:, 1], c='darkblue', s=100)
@@ -211,7 +211,6 @@ plt.savefig('fig3.png', bbox_inches='tight')
 ```
 
 
-![output](fig3.png)
 
 ## 1.3a Heirarchical clusters - R code
 Herirachical clusters is another type of unsupervised learning. It successively joins the 
@@ -272,7 +271,7 @@ plt.suptitle('Samples clustering', fontweight='bold', fontsize=14);
 plt.savefig('fig4.png', bbox_inches='tight')
 ```
 
-![output](fig4.png)
+
 
 # Conclusion
 This is the last and concluding part of my series on Practical Machine Learning with R and Python. These parallel implementations of R and Python can be used as a quick  reference while
