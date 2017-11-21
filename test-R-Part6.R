@@ -155,3 +155,29 @@ sub_grp <- cutree(hc_iris, k = 3)
 table(sub_grp)
 
 rect.hclust(hc_iris, k = 3, border = 2:5)
+
+
+# Read the digits data
+digits= read.csv("digits.csv")
+# Create digit classes target variable
+digitClasses <- factor(digits$X0.000000000000000000e.00.29)
+
+# Compute the Principal COmponents
+digitsPCA=prcomp(digits[,1:64])
+
+# Create a data frame of Principal components and the digit classes 
+df <- data.frame(digitsPCA$x)
+df1 <- cbind(df,digitClasses)
+
+# Pick only the first 2 principal components
+a<- df[,1:2]
+# Compute K Means of 10 clusters
+k<-kmeans(a,10,1000)
+
+# Create a dataframe of the centroids of the clusters
+df2<-data.frame(k$centers)
+
+#Plot the first 2 principal components with the K Means centroids
+ggplot(df1,aes(x=PC1,y=PC2,col=digitClasses)) + geom_point() +
+  geom_point(data=df2,aes(x=PC1,y=PC2),col="black",size = 4) + 
+  ggtitle("Top 2 Principal Components with KMeans clustering")
